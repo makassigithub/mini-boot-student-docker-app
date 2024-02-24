@@ -1,0 +1,26 @@
+version: "3.8"
+
+services:
+  postgres:
+    image: postgres:latest
+    container_name: postgres_db
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: students
+    ports:
+      - "5432:5432"
+    networks:
+      - spring-postgres-network
+  app:
+    build:
+      context: .
+    container_name: spring-boot-app
+    ports:
+      - "8090:8090"
+    networks:
+      - spring-postgres-network
+
+networks:
+  spring-postgres-network:
+    driver: bridge
